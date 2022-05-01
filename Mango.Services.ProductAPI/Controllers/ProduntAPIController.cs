@@ -25,8 +25,29 @@ namespace Mango.Services.ProductAPI.Controllers
             {
                 IEnumerable<ProductDto> productDtos = await _productRepo.GetProducts();
                 _response.Result = productDtos;
+                _response.IsSuccess = true;
             }
             catch(Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string>()
+                {
+                    ex.ToString()
+                };
+            }
+            return _response;
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<object> Get(int id)
+        {
+            try
+            {
+                ProductDto productDtos = await _productRepo.GetProductById(id);
+                _response.Result = productDtos;
+                _response.IsSuccess = true;
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string>()
@@ -43,6 +64,7 @@ namespace Mango.Services.ProductAPI.Controllers
             {
                 ProductDto model = await _productRepo.CreateUpdateProduct(productDto);
                 _response.Result = model;
+                _response.IsSuccess = true;
             }
             catch (Exception ex)
             {
@@ -61,6 +83,7 @@ namespace Mango.Services.ProductAPI.Controllers
             {
                 ProductDto model = await _productRepo.CreateUpdateProduct(productDto);
                 _response.Result = model;
+                _response.IsSuccess = true;
             }
             catch (Exception ex)
             {
@@ -73,12 +96,14 @@ namespace Mango.Services.ProductAPI.Controllers
             return _response;
         }
         [HttpDelete]
+        [Route("{id}")]
         public async Task<object> Delete(int id)
         {
             try
             {
                 bool isSuccess = await _productRepo.DeleteProduct(id);
                 _response.Result = isSuccess;
+                _response.IsSuccess = true;
             }
             catch (Exception ex)
             {
