@@ -20,7 +20,11 @@
                 <label asp-for="CategoryName" class="control-label pt-2" style="font-size:20px;"></label>
             </div>
             <div class="col-10 pb-3">
-                <input asp-for="CategoryName" class="form-control" />
+                <select asp-for="CategoryName" class="form-control">
+                    <option value="">Select a Category</option>
+                    <option value="Fruits">Fruits</option>
+                    <option value="Gadgets">Gadgets</option>
+                </select>
                 <span asp-validation-for="CategoryName" class="text-danger"></span>
             </div>
             <div class="col-2">
